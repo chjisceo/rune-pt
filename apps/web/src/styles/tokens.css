@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+:root,
+html[data-theme="dark"] {
+  /* Luminous Slate Dark — 밝고 선명한 네이비 슬레이트 계조 (칙칙한 블랙 배제) */
+  --bg: #101826;
+  --bg-subtle: #141f31;
+  --surface: #182336;
+  --surface-elev: #202e46;
+  --hud-bg: #071020;
+  --hud-surface: #0b172c;
+  --hud-surface-deep: #050c19;
+  --hud-surface-pill: #13233f;
+  --hud-track: #0c1b36;
+  --hud-track-muted: #152847;
+  --hud-border: rgba(99, 179, 255, 0.28);
+  --hud-border-subtle: rgba(99, 179, 255, 0.2);
+  --hud-soft: rgba(99, 179, 255, 0.1);
+  --hud-ink: #eef5ff;
+  --hud-ink-soft: #c9e2ff;
+  --hud-muted: #9ecbff;
+  --hud-gold: #eab354;
+  --hud-cyan: #4ad4e6;
+  --hud-blue: #63b3ff;
+  --canvas-bg: #071020;
+  --canvas-muscle-dim: #6e4949;
+  --canvas-muscle-base: #b24f47;
+  --canvas-skeleton: #e8dfd1;
+  --border: rgba(164, 194, 232, 0.2);
+  --border-strong: rgba(164, 194, 232, 0.36);
+
+  --ink: #f1f5fb;
+  --ink-secondary: #c7d4e6;
+  --muted: #98abc4;
+
+  --gold: #eab354;
+  --gold-ink: #121822;
+  --cyan: #4ad4e6;
+  --cyan-soft: rgba(74, 212, 230, 0.14);
+
+  --ok: #38c172;
+  --ok-ink: #071020;
+  --ok-soft: rgba(56, 193, 114, 0.14);
+  --warn: #f06a54;
+  --warn-soft: rgba(240, 106, 84, 0.14);
+
+  --chest: #f06a54;
+  --back: #4ad4e6;
+  --leg: #eab354;
+  --shoulder: #a678f5;
+  --arm: #38c172;
+  --core: #ec5fa7;
+}
+
+html[data-theme="light"] {
+  /* Warm Parchment Light — 룬PT 고유 양피지/인덱스 시트 계조 */
+  --bg: #f6f2e8;
+  --bg-subtle: #ede6d6;
+  --surface: #fffcf5;
+  --surface-elev: #ffffff;
+  --hud-bg: #081224;
+  --hud-surface: #0b172c;
+  --hud-surface-deep: #050c19;
+  --hud-surface-pill: #13233f;
+  --hud-track: #0c1b36;
+  --hud-track-muted: #152847;
+  --hud-border: rgba(99, 179, 255, 0.28);
+  --hud-border-subtle: rgba(99, 179, 255, 0.2);
+  --hud-soft: rgba(99, 179, 255, 0.1);
+  --hud-ink: #eef5ff;
+  --hud-ink-soft: #c9e2ff;
+  --hud-muted: #9ecbff;
+  --hud-gold: #eab354;
+  --hud-cyan: #4ad4e6;
+  --hud-blue: #63b3ff;
+  --canvas-bg: #efeae0;
+  --canvas-muscle-dim: #6e4949;
+  --canvas-muscle-base: #b24f47;
+  --canvas-skeleton: #e8dfd1;
+  --border: #d8cfbc;
+  --border-strong: #b9ad95;
+
+  --ink: #18202c;
+  --ink-secondary: #344154;
+  --muted: #566376;
+
+  --gold: #7d5710;
+  --gold-ink: #fffcf5;
+  --cyan: #0b7e93;
+  --cyan-soft: rgba(11, 126, 147, 0.11);
+
+  --ok: #1d8048;
+  --ok-ink: #ffffff;
+  --ok-soft: rgba(29, 128, 72, 0.11);
+  --warn: #c8432f;
+  --warn-soft: rgba(200, 67, 47, 0.11);
+
+  --chest: #d94c38;
+  --back: #0b7e93;
+  --leg: #7d5710;
+  --shoulder: #6d4aff;
+  --arm: #1d8048;
+  --core: #c2367c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  caret-color: var(--cyan);
+  scrollbar-color: var(--border-strong) var(--bg);
+  scrollbar-width: thin;
+}
+
+::selection {
+  background-color: var(--cyan-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+
+.mono-num {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.surface-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.surface-elev {
+  background-color: var(--surface-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.hud-panel {
+  background-color: var(--hud-bg);
+  color: var(--hud-ink);
+  border: 1px solid var(--hud-border);
+  border-top-color: var(--hud-blue);
+  border-radius: 12px;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modalIn 160ms ease-out;
+}

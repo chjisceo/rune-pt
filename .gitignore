@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+*.log
+.DS_Store
+apps/web/public/models/*.glb
+
+# Impeccable local runtime. Keep the shared detector ignore list.
+.impeccable/**
+!.impeccable/config.json

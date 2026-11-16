@@ -1,0 +1,13 @@
+{
+  "name": "rune-pt-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm --workspace @rune-pt/web run dev",
+    "build": "npm --workspace @rune-pt/core run typecheck && npm --workspace @rune-pt/web run build",
+    "typecheck": "npm --workspace @rune-pt/core run typecheck && npm --workspace @rune-pt/web run typecheck"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "design-review/compare/asis.html"
+        ],
+        "createdAt": "2026-11-13T22:59:13.346Z",
+        "reason": "Agent: as-is reconstruction copies the live button pair #ffffff on #d9aa4e so the before image stays faithful"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "design-review/compare/asis.html"
+        ],
+        "createdAt": "2026-11-13T23:00:30.149Z",
+        "reason": "Agent: as-is nav copies the live rule box-shadow inset 0 3px 0 var(--gd) so the before image stays faithful"
+      }
+    ]
+  }
+}
