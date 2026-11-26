@@ -10,3 +10,6 @@ apps/web/public/models/*.glb
 # Impeccable local runtime. Keep the shared detector ignore list.
 .impeccable/**
 !.impeccable/config.json
+
+# Live app build output (rebuilt from apps/live/upstream + overlay)
+apps/live/dist/

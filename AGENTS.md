@@ -36,6 +36,11 @@ rune-pt/
 │           ├── repository.ts    # RuneDataRepository 인터페이스 (localStorage / Supabase 교체 경계)
 │           └── sampleData.ts    # 데모/초기 샘플 데이터
 ├── apps/
+│   ├── live/                    # 운영 앱(upvible/Rune-PT 원본) + Path A 화면 덧입힘. 지금 배포 대상
+│   │   ├── upstream/            # 원본을 바이트 그대로 복사 (npm run live:sync로만 갱신, 직접 수정 금지)
+│   │   ├── overlay/ui/          # path-a.css · path-a.js: 원본 함수를 감싸서 화면만 바꿈
+│   │   ├── src/muscle-viewer.js # 3D 근육 뷰어 (빌드 때 ui/muscle-viewer.js로 묶임)
+│   │   └── README.md            # 패치 목록 · 바뀌는 화면 · 명령
 │   ├── web/                     # Vite + React 19 + TypeScript + Tailwind CSS v4 (@rune-pt/web)
 │   │   ├── index.html
 │   │   ├── public/
@@ -69,6 +74,7 @@ rune-pt/
 1. **비즈니스/도메인 로직은 `packages/core/src/`에 둡니다.** React/DOM 의존성 없이 순수 TypeScript로 유지해 향후 `apps/mobile`(Expo)에서도 그대로 import할 수 있어야 합니다.
 2. **웹 UI는 `apps/web/src/components/`로 모듈화합니다.**
 3. **절대 단일 HTML 파일(`index.html` 한 파일에 JS/CSS/화면 전부 넣기)로 되돌리지 마세요.** (Do not revert back to single-file HTML.)
+4. **운영 앱 화면 변경은 `apps/live/overlay/`에서 합니다.** `apps/live/upstream/`은 트레이너 저장소의 사본이라 직접 고치지 않습니다. 원본 함수는 다시 구현하지 말고 감싸서 결과 HTML의 `data-act`와 숫자를 유지합니다. 원본 파일에 꼭 필요한 변경은 `scripts/live-build.mjs`의 패치로만 넣고, 기준 문장을 못 찾으면 빌드가 멈추게 둡니다.
 
 ---
 
@@ -116,6 +122,11 @@ npm run build
 
 # 3. 웹 개발 서버 실행 (http://localhost:4173)
 npm run dev
+
+# 4. 운영 앱(apps/live): 원본 가져오기 · 빌드 · 실행(http://localhost:4174) · Chrome 자동 점검
+npm run live:sync
+npm run live:dev
+npm run live:smoke
 ```
 
 특정 워크스페이스만 점검할 때:

@@ -8,6 +8,14 @@
   "scripts": {
     "dev": "npm --workspace @rune-pt/web run dev",
     "build": "npm --workspace @rune-pt/core run typecheck && npm --workspace @rune-pt/web run build",
-    "typecheck": "npm --workspace @rune-pt/core run typecheck && npm --workspace @rune-pt/web run typecheck"
+    "typecheck": "npm --workspace @rune-pt/core run typecheck && npm --workspace @rune-pt/web run typecheck",
+    "live:sync": "node scripts/live-sync.mjs",
+    "live:build": "node scripts/live-build.mjs",
+    "live:dev": "node scripts/live-build.mjs && node scripts/live-serve.mjs",
+    "live:smoke": "node scripts/live-build.mjs && node scripts/live-smoke.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "playwright-core": "1.65.1"
   }
 }

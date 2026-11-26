@@ -6,6 +6,8 @@
 - **코드 수정 후 필수 검증:**
   ```bash
   npm run typecheck && npm run build
+  # apps/live 를 건드렸다면
+  npm run live:smoke
   ```
 - **체크리스트 요약:**
   - 도메인 계산·상수·타입은 `packages/core/src/`에 두고, 웹 UI는 `apps/web/src/components/`에 작성합니다.
