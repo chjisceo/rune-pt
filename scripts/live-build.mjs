@@ -63,7 +63,7 @@ await build({
 
 patch('index.html', [
   ['overlay stylesheet', '</head>',
-    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap">\n<link rel="stylesheet" href="ui/path-a.css">\n</head>', 'href="ui/path-a.css"'],
+    '<link rel="stylesheet" href="ui/path-a.css">\n</head>', 'href="ui/path-a.css"'],
   ['overlay script', /<script>\s*if\('serviceWorker' in navigator\)/,
     (m) => `<script src="ui/path-a.js"></script>\n${m}`, 'src="ui/path-a.js"'],
   ['avatar postMessage origin', "f.contentWindow.postMessage(avatarState(),'*')",

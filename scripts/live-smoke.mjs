@@ -37,7 +37,7 @@ async function run(viewport, theme, label) {
 
   await page.goto(BASE);
   await page.waitForSelector('.pa-auth');
-  check(await page.locator('.pa-auth h1').innerText() === '오늘 한 세트가 숙련도가 돼요', `${label}: login headline`);
+  check((await page.locator('.pa-auth h1').innerText()).replace(/\s+/g, ' ').trim() === '오늘 한 세트가 숙련도가 돼요', `${label}: login headline`);
   check(await page.locator('.btn.kk').count() === 1, `${label}: one kakao button`);
   await snap('01-login');
   check(!requests.some((u) => u.endsWith('.glb') || u.includes('muscle-viewer')), `${label}: no 3D files before login`);
@@ -70,7 +70,7 @@ async function run(viewport, theme, label) {
   const add = page.locator('#fqr [data-act="fqadd"]').first();
   // 원본은 담기 직후 0.5초 동안 실수 탭을 막아요.
   if (await add.count()) { await add.click(); await page.waitForTimeout(800); }
-  check(await page.locator('.pa-mus-list li').count() >= 1, `${label}: muscle card lists exercise`);
+  check(/벤치/.test(await page.locator('.pa-card-title').first().innerText()), `${label}: muscle card shows current exercise`);
   await snap('04-today');
 
   await act('.frl [data-act="slot"]');
@@ -102,7 +102,7 @@ async function run(viewport, theme, label) {
   check(stored >= 1, `${label}: today record stored in rpt1`);
   if (await page.locator('#md.on').count()) await page.keyboard.press('Escape');
   await page.evaluate(() => { if (document.querySelector('#md.on')) closeM(); });
-  await act('.pa-gifts');
+  await act('[data-act="gifts"]:visible'); // 휴대폰은 오늘 화면, 컴퓨터는 사이드 아래
   await page.waitForSelector('#md.on');
   await page.evaluate(() => closeM());
 
@@ -116,7 +116,7 @@ async function run(viewport, theme, label) {
   await act('[data-act="servers"]');
   await act('[data-act="enter"][data-v="admin"]');
   await page.waitForSelector('body.pa-admin');
-  check((await page.locator('#nav button .pa-i').count()) === 6, `${label}: trainer tabs keep six with icons`);
+  check((await page.locator('#nav button[data-act="tab"]').count()) === 6, `${label}: trainer keeps six tabs`);
   await snap('08-trainer');
   for (const v of ['day', 'quest', 'mem', 'rec', 'cat']) { await act(`#nav [data-v="${v}"]`); await page.waitForTimeout(150); }
   await snap('09-trainer-cat');

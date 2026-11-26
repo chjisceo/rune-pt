@@ -109,7 +109,8 @@ export function mountViewer(host, opt) {
 
       const hot = css('--pa-muscle-hot', '#f06a54');
       const warm = css('--pa-muscle-warm', '#eab354');
-      const dim = css('--pa-muscle-dim', '#6e4f4c');
+      // 강조할 근육이 없으면(포스터) 전체를 밝은 기본색으로, 있으면 나머지를 낮춰 대비를 줘요.
+      const dim = primary.size ? css('--pa-muscle-dim', '#a2665d') : css('--pa-muscle-base', '#c9786c');
       const bone = css('--pa-bone', '#e8dfd1');
       const hits = new THREE.Box3();
       let anyHit = false;
