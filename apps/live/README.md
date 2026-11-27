@@ -23,7 +23,15 @@ npm run live:sync    # upvible/Rune-PT main을 upstream/으로 다시 가져와�
 npm run live:build   # upstream + overlay -> dist
 npm run live:dev     # 빌드하고 http://localhost:4174 에서 열어요
 npm run live:smoke   # 빌드하고 Chrome으로 회원·트레이너 흐름을 눌러 봐요
+
+# 트레이너 저장소의 브랜치를 Merge 전에 점검할 때 (원본 대신 그 폴더로 빌드)
+LIVE_UPSTREAM=/절대/경로/Rune-PT npm run live:smoke
+
+# 트레이너 저장소의 index.html을 css/app.css + js/ 4개로 나눌 때 (동작 변화 없음, 바이트 단위 검증)
+node scripts/live-split.mjs /경로/Rune-PT
 ```
+
+원본이 나뉜 뒤에도 빌드는 그대로 동작해요. 아바타 메시지 패치는 `js/app.js`가 있으면 그 파일에, 없으면 `index.html`에 들어가요.
 
 로컬 주소는 `github.io`가 아니라서 원본이 서버에 연결하지 않아요. 로그인 화면의 "로그인 없이 미리보기"로 들어가면 회원·트레이너 화면을 모두 볼 수 있어요. 카카오·구글 로그인은 배포 주소에서만 동작해요.
 

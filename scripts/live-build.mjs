@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const live = path.join(root, 'apps/live');
-const upstream = path.join(live, 'upstream');
+// LIVE_UPSTREAM=<folder> builds from a local checkout (e.g. the trainer's branch before it is merged).
+const upstream = process.env.LIVE_UPSTREAM ? path.resolve(process.env.LIVE_UPSTREAM) : path.join(live, 'upstream');
 const overlay = path.join(live, 'overlay');
 const dist = path.join(live, 'dist');
 const webPublic = path.join(root, 'apps/web/public');
@@ -31,7 +32,7 @@ function patch(file, steps) {
 
 if (!existsSync(upstream)) throw new Error('apps/live/upstream is missing. Run: npm run live:sync');
 rmSync(dist, { recursive: true, force: true });
-cpSync(upstream, dist, { recursive: true });
+cpSync(upstream, dist, { recursive: true, filter: (src) => !/[\\/](\.git|node_modules)([\\/]|$)/.test(path.relative(upstream, src)) && !/^(\.git|node_modules)$/.test(path.relative(upstream, src)) });
 
 cpSync(overlay, dist, {
   recursive: true,
@@ -61,11 +62,17 @@ await build({
   logLevel: 'warning',
 });
 
+// After the trainer splits index.html (scripts/live-split.mjs), app code lives in js/app.js.
+const appFile = existsSync(path.join(dist, 'js/app.js')) ? 'js/app.js' : 'index.html';
+
 patch('index.html', [
   ['overlay stylesheet', '</head>',
     '<link rel="stylesheet" href="ui/path-a.css">\n</head>', 'href="ui/path-a.css"'],
   ['overlay script', /<script>\s*if\('serviceWorker' in navigator\)/,
     (m) => `<script src="ui/path-a.js"></script>\n${m}`, 'src="ui/path-a.js"'],
+]);
+
+patch(appFile, [
   ['avatar postMessage origin', "f.contentWindow.postMessage(avatarState(),'*')",
     'f.contentWindow.postMessage(avatarState(),location.origin)', 'postMessage(avatarState(),location.origin)'],
 ]);
@@ -83,6 +90,6 @@ patch('sw.js', [
     (_, list) => `const SHELL = [${list}, 'ui/path-a.css', 'ui/path-a.js'];`, "'ui/path-a.js'"],
 ]);
 
-const up = JSON.parse(readFileSync(path.join(live, 'UPSTREAM.json'), 'utf8'));
+const up = process.env.LIVE_UPSTREAM ? { sha: `local:${upstream}` } : JSON.parse(readFileSync(path.join(live, 'UPSTREAM.json'), 'utf8'));
 writeFileSync(path.join(dist, 'ui/build.json'), JSON.stringify({ upstream: up.sha, builtAt: new Date().toISOString() }) + '\n');
-console.log(`[live-build] apps/live/dist ready (upstream ${up.sha.slice(0, 7)})`);
+console.log(`[live-build] apps/live/dist ready (upstream ${process.env.LIVE_UPSTREAM ? upstream : up.sha.slice(0, 7)})`);
